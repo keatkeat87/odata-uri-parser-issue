@@ -20,23 +20,14 @@ namespace test_odata.Pages
 
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
-
-        public IndexModel(
-            ILogger<IndexModel> logger
-        )
-        {
-            _logger = logger;
-        }
-
         public void OnGet()
         {
             ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
             builder.EntitySet<UserSettingGroup>("UserSettingGroups");
             var model = builder.GetEdmModel();
 
-            var filterValue1 = "freeland"; // Wrong url = http://localhost:46151/api/UserSettingGroups?$filter=name eq 'freel and '
-            //var filterValue1 = "freelanz"; // Correct url = http://localhost:46151/api/UserSettingGroups?$filter=name eq 'freelanz' and Id eq 1
+            var filterValue1 = "freeland"; // Wrong final url = http://localhost:46151/api/UserSettingGroups?$filter=name eq 'freel and '
+            //var filterValue1 = "freelanz"; // Correct final url = http://localhost:46151/api/UserSettingGroups?$filter=name eq 'freelanz' and Id eq 1
 
             var parser1 = new ODataUriParser(model, new Uri($"http://localhost:46151/api"), new Uri($"http://localhost:46151/api/UserSettingGroups?$filter=name eq '{filterValue1}'"))
             {
